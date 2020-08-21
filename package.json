@@ -10,7 +10,7 @@
   "gypfile": true,
   "cmake-js": {
     "runtime": "electron",
-    "runtimeVersion": "8.5.0",
+    "runtimeVersion": "9.2.1",
     "arch": "x64"
   },
   "dependencies": {
