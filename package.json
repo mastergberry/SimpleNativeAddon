@@ -1,0 +1,20 @@
+{
+  "name": "simple_native_addon",
+  "version": "0.0.0",
+  "description": "A simple node.js native addon",
+  "scripts": {
+    "build": "cmake-js install && cmake-js compile"
+  },
+  "main": "example.js",
+  "private": true,
+  "gypfile": true,
+  "cmake-js": {
+    "runtime": "electron",
+    "runtimeVersion": "8.5.0",
+    "arch": "x64"
+  },
+  "dependencies": {
+    "nan": "2.14.1",
+    "cmake-js": "6.1.0"
+  }
+}
