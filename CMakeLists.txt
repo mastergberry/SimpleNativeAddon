@@ -36,6 +36,9 @@ else()
     add_library(SimpleNativeAddon SHARED library.cpp ${CMAKE_JS_SRC})
 endif()
 
+# Try to force use libc++
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+
 # Gives our library file a .node extension without any "lib" prefix
 set_target_properties(SimpleNativeAddon PROPERTIES PREFIX "" SUFFIX ".node")
 

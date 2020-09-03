@@ -2,8 +2,11 @@
   "name": "simple_native_addon",
   "version": "0.0.0",
   "description": "A simple node.js native addon",
+  "gypfile": true,
   "scripts": {
-    "build": "cmake-js install && cmake-js compile"
+    "build-gyp": "node-gyp configure build --verbose",
+    "build": "cmake-js install && cmake-js compile",
+    "configure": "cmake-js install && cmake-js configure --out cmake-build --prefer-make -l silly"
   },
   "main": "example.js",
   "private": true,
