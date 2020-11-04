@@ -1,25 +1,21 @@
-#include <nan.h>
+#include <napi.h>
 #include <iostream>
 #include <chrono>
 #include <thread>
 
 #ifdef _WIN32
+#include "windows.h"
 #include <processthreadsapi.h>
 #else
 #include <unistd.h>
 #endif
 
-using Nan::New;
-using Nan::Set;
-using Nan::GetFunction;
-using v8::FunctionTemplate;
-using v8::String;
-using v8::Integer;
-
 using namespace std;
 
-NAN_METHOD(ExampleMethod)
+Napi::Value ExampleMethod(const Napi::CallbackInfo& info)
 {
+    Napi::Env env = info.Env();
+
 #ifdef _WIN32
     DWORD pid = GetProcessId(GetCurrentProcess());
 #else
@@ -34,17 +30,22 @@ NAN_METHOD(ExampleMethod)
     for (int i = 1; i <= 100; i++)
         randomNumber += i;
 
-    info.GetReturnValue().Set(Nan::New<Integer>(static_cast<int>(randomNumber)));
+    Napi::Number num = Napi::Number::New(env, randomNumber);
+
+    return num;
 }
 
-NAN_MODULE_INIT(Init)
+Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
-    Set(target, New<String>("exampleMethod").ToLocalChecked(), GetFunction(New<FunctionTemplate>(ExampleMethod)).ToLocalChecked());
+    exports.Set(Napi::String::New(env, "exampleMethod"), Napi::Function::New(env, ExampleMethod));
+
+    // Uncomment if you are trying to test on Windows and want to attach a debugger
+    //std::this_thread::sleep_for(std::chrono::seconds(10));
+
+    cout << "Init loaded" << endl;
+
+    return exports;
 }
 
 // Register native add on
-#if NODE_MODULE_VERSION >= 80
-NAN_MODULE_WORKER_ENABLED(SimpleNativeAddon, Init)
-#else
-NODE_MODULE(SimpleNativeAddon, Init)
-#endif
+NODE_API_MODULE(addon, Init)

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "A simple node.js native addon",
   "scripts": {
-    "build": "cmake-js install && cmake-js compile"
+    "build": "cmake-js install && cmake-js compile",
+    "build-gyp": "electron-rebuild -f --version 9.2.1"
   },
   "main": "example.js",
   "private": true,
@@ -14,7 +15,11 @@
     "arch": "x64"
   },
   "dependencies": {
+    "cmake-js": "6.1.0",
     "nan": "2.14.1",
-    "cmake-js": "6.1.0"
+    "node-addon-api": "^3.0.2"
+  },
+  "devDependencies": {
+    "electron-rebuild": "2.3.2"
   }
 }
